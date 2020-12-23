@@ -5,6 +5,7 @@ const auth = require("../../middleware/auth");
 const questionController = require('./question');
 
 router.get("/getAllQuestion",auth,questionController.getAllQuestion);
+router.get("/getAllEasyQuestion",auth,questionController.getAllEasyQuestion);
 router.post("/getOneQuestionSet",auth,questionController.getOneQuestionSet);
 
 module.exports = router;

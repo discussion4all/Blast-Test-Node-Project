@@ -23,3 +23,17 @@ module.exports.getOneQuestionSet = function(req,res){
     })
 }
 
+//get all easy questions in question table
+module.exports.getAllEasyQuestion = async function(req,res){
+    
+    var query = [
+        { $unwind: '$Questions'},
+        { $match: {'Questions.Type': "Easy"}},
+        { $group: {_id: '$_id',QuestionSet: { "$first": "$QuestionSet" },Questions: {$push: '$Questions'}}}
+        ];
+    
+    const tmp = await DB.aggregatewithoutcallback(table, query);
+  
+    res.send({msg:"Record Found",err:null,data:tmp});
+
+}

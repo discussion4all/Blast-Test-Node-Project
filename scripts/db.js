@@ -41,4 +41,20 @@ mongodb.prototype.find = async function(collection,query,callback){
     })
 }
 
+mongodb.prototype.aggregate = function(collection, query, callback) {
+    var table = dbConnection.collection(collection);
+    table.aggregate(query, function(err, result) {
+      if(err) {
+        callback(err, null);
+      } else {
+        callback(null, result);
+      } 
+    });
+  }
+  
+  mongodb.prototype.aggregatewithoutcallback = function(collection, query) {
+    var table = dbConnection.collection(collection);
+    return table.aggregate(query).toArray();
+  }
+
 module.exports = mongodb;
