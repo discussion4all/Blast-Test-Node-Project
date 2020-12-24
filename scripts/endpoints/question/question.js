@@ -29,7 +29,8 @@ module.exports.getAllEasyQuestion = async function(req,res){
     var query = [
         { $unwind: '$Questions'},
         { $match: {'Questions.Type': "Easy"}},
-        { $group: {_id: '$_id',QuestionSet: { "$first": "$QuestionSet" },Questions: {$push: '$Questions'}}}
+        { $group: {_id: '$_id',QuestionSet: { "$first": "$QuestionSet" },Questions: {$push: '$Questions'}}},
+        { $sort: {QuestionSet:1}}
         ];
     
     const tmp = await DB.aggregatewithoutcallback(table, query);
