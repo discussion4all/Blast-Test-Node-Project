@@ -38,3 +38,19 @@ module.exports.getAllEasyQuestion = async function(req,res){
     res.send({msg:"Record Found",err:null,data:tmp});
 
 }
+
+//get all hard questions in question table
+module.exports.getAllHardQuestion = async function(req,res){
+    
+    var query = [
+        { $unwind: '$Questions'},
+        { $match: {'Questions.Type': "Hard"}},
+        { $group: {_id: '$_id',QuestionSet: { "$first": "$QuestionSet" },Questions: {$push: '$Questions'}}},
+        { $sort: {QuestionSet:1}}
+        ];
+    
+    const tmp = await DB.aggregatewithoutcallback(table, query);
+  
+    res.send({msg:"Record Found",err:null,data:tmp});
+
+}
