@@ -1,5 +1,5 @@
 let table = 'question';
-
+let tablelog = "userlogs"
 //get all questions in question table
 module.exports.getAllQuestion = function(req,res){
     DB.find(table,{},function(err,result){
@@ -53,4 +53,17 @@ module.exports.getAllHardQuestion = async function(req,res){
   
     res.send({msg:"Record Found",err:null,data:tmp});
 
+}
+
+module.exports.saveLogForUser = async function(req,res){
+    var query = req.body;
+    query.date = new Date().toGMTString();
+    //query.time = 
+    DB.insert(tablelog,query,function(err,result){
+        if(err){
+            res.send({status:false,err:err,msg:"Somthing Went wrong"})
+        }else{
+            res.send({status:true,data:result,msg:"User log created"}) 
+        }
+    })
 }

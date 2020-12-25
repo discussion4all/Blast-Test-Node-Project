@@ -8,5 +8,6 @@ router.get("/getAllQuestion",auth,questionController.getAllQuestion);
 router.get("/getAllEasyQuestion",auth,questionController.getAllEasyQuestion);
 router.get("/getAllHardQuestion",auth,questionController.getAllHardQuestion);
 router.post("/getOneQuestionSet",auth,questionController.getOneQuestionSet);
+router.post("/saveLogForUser",auth,questionController.saveLogForUser);
 
 module.exports = router;
