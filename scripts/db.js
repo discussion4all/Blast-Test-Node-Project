@@ -1,7 +1,7 @@
 const MongoClient = require("mongodb").MongoClient;
 
 var dbConnection;
-
+//mongodb connection file and function for database opration function
 function mongodb(url,dbname){
     MongoClient.connect(url, {useUnifiedTopology: true}, function(err, db) {
         if (err) {

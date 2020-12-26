@@ -9,7 +9,7 @@ const configFile = './scripts/config.ini';
 const watcher = watch(configFile);
 var db = require('./scripts/db');
 
-//get config info
+//get config info from config
 const config = ini.parse(fs.readFileSync(configFile,'utf-8'));
 
 var httpPort = config.GeneralSettings.httpPort;
@@ -24,6 +24,7 @@ watcher.on('error',(err)=>{
 
 watcher.on('ready',()=>{
     console.log("Config file loaded !");
+    //mongodb connection
     var dbIP = config.GeneralSettings.dbIP;
     var dbPort = config.GeneralSettings.dbPort;
     var dbName = config.GeneralSettings.dbName;
@@ -32,11 +33,13 @@ watcher.on('ready',()=>{
     DB = module.exports = new db(url,dbName);
 })
 
+//body parser
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 const cros = require('cors');
 app.use(cros());
+//route for API 
 app.use("/",router);
 const question = require("./scripts/endpoints/question/questionRoutes");
 app.use("/",question);

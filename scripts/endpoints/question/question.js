@@ -54,7 +54,7 @@ module.exports.getAllHardQuestion = async function(req,res){
     res.send({msg:"Record Found",err:null,data:tmp});
 
 }
-
+//log api for user
 module.exports.saveLogForUser = async function(req,res){
     var query = req.body;
     query.date = new Date().toGMTString();

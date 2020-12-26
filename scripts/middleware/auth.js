@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 
 dotenv.config();
-
+//middleware for check authentication,authentication using JWT token
 module.exports = (req, res, next) => {
   const token = req.header("x-auth-token");
 
