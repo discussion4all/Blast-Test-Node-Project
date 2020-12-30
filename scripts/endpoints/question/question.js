@@ -2,8 +2,6 @@ const _ = require("lodash");
 const { Question } = require("../../model/questionModel");
 const { userLogs } = require("../../model/logModel");
 
-let table = 'question';
-let tablelog = "userlogs"
 //get all questions in question table
 module.exports.getAllQuestion = async function(req,res){
     const questions = await Question.find();
@@ -13,7 +11,7 @@ module.exports.getAllQuestion = async function(req,res){
 //get one question set in question table
 module.exports.getOneQuestionSet = async function(req,res){
     
-    const question = await Question.findOne({QuestionSet:Number(req.body.set)});
+    const question = await Question.find({QuestionSet:Number(req.body.set)});
     res.send({msg:"Record Found",err:null,data:question});
 }
 
@@ -54,13 +52,5 @@ module.exports.saveLogForUser = async function(req,res){
     
     let userLog = new userLogs(query);
     userLog.save();
-    res.send({status:true,data:result,msg:"User log created"}); 
-}
-//add question
-module.exports.addQuestion = async function(req,res){
-    var query = req.body;
-    
-    let question = new Question(query);
-    question.save();
-    res.send({status:true,data:question,msg:"added"}); 
+    res.send({status:true,data:userLog,msg:"User log created"}); 
 }
