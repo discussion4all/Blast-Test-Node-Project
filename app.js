@@ -7,7 +7,9 @@ const ini = require("ini");
 const fs = require("fs");
 const configFile = './scripts/config.ini';
 const watcher = watch(configFile);
-var db = require('./scripts/db');
+
+//run db file
+require("./scripts/db")();
 
 //get config info from config
 const config = ini.parse(fs.readFileSync(configFile,'utf-8'));
@@ -24,13 +26,6 @@ watcher.on('error',(err)=>{
 
 watcher.on('ready',()=>{
     console.log("Config file loaded !");
-    //mongodb connection
-    var dbIP = config.GeneralSettings.dbIP;
-    var dbPort = config.GeneralSettings.dbPort;
-    var dbName = config.GeneralSettings.dbName;
-    var url = "mongodb://".concat(dbIP,':',dbPort);
-
-    DB = module.exports = new db(url,dbName);
 })
 
 //body parser

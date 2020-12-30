@@ -1,10 +1,5 @@
 const mongoose = require("mongoose");
 
-const QuestionsSchema = new mongoose.Schema({
-  QuestionSet: { type: String, required: true },
-  Questions: [OneQuestions],
-});
-
 const OneQuestions = new mongoose.Schema({
   Type: { type: String, required: true },
   Question: { type: String, required: true },
@@ -17,6 +12,11 @@ const OneQuestions = new mongoose.Schema({
   PageNumber:{ type: Number, required: true },
 });
 
-
+const QuestionsSchema = new mongoose.Schema({
+  QuestionSet: { type: Number, required: true },
+  Questions: [OneQuestions],
+});
 
 const QuestionsSets = mongoose.model("question", QuestionsSchema);
+
+module.exports.Question = QuestionsSets;

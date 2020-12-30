@@ -14,3 +14,5 @@ const userlogs = new mongoose.Schema({
 
 
 const userLogs = mongoose.model("userlogs", userlogs);
+
+module.exports.userLogs = userLogs;

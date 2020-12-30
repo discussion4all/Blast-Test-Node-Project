@@ -1,26 +1,20 @@
+const _ = require("lodash");
+const { Question } = require("../../model/questionModel");
+const { userLogs } = require("../../model/logModel");
+
 let table = 'question';
 let tablelog = "userlogs"
 //get all questions in question table
-module.exports.getAllQuestion = function(req,res){
-    DB.find(table,{},function(err,result){
-        if(err){
-            res.send({msg:"Not Found",err:err,data:null});
-        }else{
-            res.send({msg:"Record Found",err:null,data:result});
-        }
-    })
+module.exports.getAllQuestion = async function(req,res){
+    const questions = await Question.find();
+    res.send({msg:"Record Found",err:null,data:questions});
 }
 
 //get one question set in question table
-module.exports.getOneQuestionSet = function(req,res){
+module.exports.getOneQuestionSet = async function(req,res){
     
-    DB.find(table,{'QuestionSet':Number(req.body.set)},function(err,result){
-        if(err){
-            res.send({msg:"Not Found",err:err,data:null});
-        }else{
-            res.send({msg:"Record Found",err:null,data:result});
-        }
-    })
+    const question = await Question.findOne({QuestionSet:Number(req.body.set)});
+    res.send({msg:"Record Found",err:null,data:question});
 }
 
 //get all easy questions in question table
@@ -33,9 +27,8 @@ module.exports.getAllEasyQuestion = async function(req,res){
         { $sort: {QuestionSet:1}}
         ];
     
-    const tmp = await DB.aggregatewithoutcallback(table, query);
-  
-    res.send({msg:"Record Found",err:null,data:tmp});
+    const questions = await Question.aggregate(query);
+    res.send({msg:"Record Found",err:null,data:questions});
 
 }
 
@@ -49,21 +42,17 @@ module.exports.getAllHardQuestion = async function(req,res){
         { $sort: {QuestionSet:1}}
         ];
     
-    const tmp = await DB.aggregatewithoutcallback(table, query);
-  
-    res.send({msg:"Record Found",err:null,data:tmp});
+    const questions = await Question.aggregate(query);
+    res.send({msg:"Record Found",err:null,data:questions});
 
 }
+
 //log api for user
 module.exports.saveLogForUser = async function(req,res){
     var query = req.body;
     query.date = new Date().toGMTString();
-    //query.time = 
-    DB.insert(tablelog,query,function(err,result){
-        if(err){
-            res.send({status:false,err:err,msg:"Somthing Went wrong"})
-        }else{
-            res.send({status:true,data:result,msg:"User log created"}) 
-        }
-    })
+    
+    let userLog = new userLogs(query);
+    userLog.save();
+    res.send({status:true,data:result,msg:"User log created"}); 
 }
