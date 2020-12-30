@@ -56,3 +56,11 @@ module.exports.saveLogForUser = async function(req,res){
     userLog.save();
     res.send({status:true,data:result,msg:"User log created"}); 
 }
+//add question
+module.exports.addQuestion = async function(req,res){
+    var query = req.body;
+    
+    let question = new Question(query);
+    question.save();
+    res.send({status:true,data:question,msg:"added"}); 
+}

@@ -10,4 +10,5 @@ router.get("/getAllHardQuestion",auth,questionController.getAllHardQuestion);
 router.post("/getOneQuestionSet",auth,questionController.getOneQuestionSet);
 router.post("/saveLogForUser",auth,questionController.saveLogForUser);
 
+router.post("/addQuestion",auth,questionController.addQuestion);
 module.exports = router;
